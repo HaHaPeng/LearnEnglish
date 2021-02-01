@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "group": "cd react && npm run build && cd .. && npm run node",
     "node": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
