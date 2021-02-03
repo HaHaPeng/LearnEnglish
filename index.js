@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-// const db = require('./node/mongodb/connect')
 const app = express()
 
 //格式化参数
@@ -23,10 +22,23 @@ const options = {
 }
 app.use(express.static('./react/dist', options))
 
+//解决跨域
+app.all('*', function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Methods', '*');
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    next();
+});
+
 //路由
-app.use('/', (req, res) => {
-    res.sendFile(__dirname + '/react/dist/index.html')
-})
+// app.use('/', (req, res) => {
+//     res.sendFile(__dirname + '/react/dist/index.html')
+// })
+
+//单词路由
+const wordRouter = require('./node/router/wordRouter')
+app.use('/word', wordRouter)
 
 //端口
 app.listen(8091, () => {

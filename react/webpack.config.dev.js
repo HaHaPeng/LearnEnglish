@@ -1,7 +1,6 @@
 const path = require("path");
 const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const appDirectory = fs.realpathSync(process.cwd());
@@ -58,19 +57,14 @@ module.exports = {
         exclude: [/node_modules/],
         use:[
           {
-            loader: MiniCssExtractPlugin.loader
-          },
-          {
             loader: 'style-loader'
           },
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1,
               modules: {
-                mode: 'local',
-                localIdentName: '[path][name]__[local]--[hash:base64:5]',
-                hashPrefix: 'my-custom-hash',
+                auto: true,
+                localIdentName: '[path][name]__[local]--[hash:base64:5]'
               }
             },
           },
@@ -103,10 +97,6 @@ module.exports = {
       inject: true,
       chunksSortMode: 'none',
       inlineSource: '.(css)$'
-    }),
-    new MiniCssExtractPlugin({
-      filename: "[name].[chunkhash].css",
-      chunkFilename: "[id].css"
     })
   ]
 };
